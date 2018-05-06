@@ -49,3 +49,16 @@ h1 {
 .divider {
   margin-bottom: 30px;
 }
+
+.icon {
+  transform: scale(2.0);
+}
+
+.icon:hover {
+
+  transform: scale(3.0);
+}
+
+.footerLinks {
+  margin: 0 10px;
+}

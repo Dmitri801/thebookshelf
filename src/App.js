@@ -3,6 +3,7 @@ import Home from './routes/Home';
 import Search from './routes/Search';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Footer from './components/Footer';
 import Header from './components/Header';
 
 import './App.css';
@@ -16,6 +17,7 @@ class App extends Component {
             <Header />
             <Route exact path="/" component={Home} />
             <Route exact path="/search" component={Search} />
+            <Footer />
           </div>
         </MuiThemeProvider>
       </Router>;
