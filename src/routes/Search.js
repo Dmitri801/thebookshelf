@@ -20,7 +20,7 @@ class Search extends Component {
       } else {
         BooksAPI.search(val, 15)
           .then(books => this.setState({ books }))
-          .catch(err => console.log(err))
+          .catch(err => console.log(err))  
       }
     })
   }
