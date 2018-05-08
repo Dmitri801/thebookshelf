@@ -15,8 +15,10 @@ class App extends Component {
    currentlyReading: [],
    wantToRead: [],
    read: [],
-   none: []
-
+   none: [],
+   searchText: '',
+   books: []
+  
   };
 
   componentDidMount() {
@@ -49,9 +51,7 @@ class App extends Component {
   }
 
   updateBookState = (book, newShelf) => {
-
     BooksAPI.update(book, newShelf)
-
       .then(updatedBook => {
         BooksAPI.getAll().then(books => {
           const read = books.reduce((val, book) => {
@@ -82,6 +82,32 @@ class App extends Component {
 
       })
   }
+
+  
+  onTextChange = (e) => {
+    const val = e.target.value
+    this.setState({ [e.target.name]: e.target.value }, () => {
+      if (val === '') {
+        this.setState({
+          books: []
+        })
+      } else {
+        BooksAPI.search(val, 15)
+          .then(books => {
+            const currentlyReadingId = this.state.currentlyReading.map(i => i.id);
+            const filterCurrentlyReading = books.filter(book => (
+              book.id === currentlyReadingId.map(i => i)
+            ))
+            console.log(filterCurrentlyReading)
+            this.setState({ books })
+          })
+          .catch(err => console.log(err))
+      }
+    })
+  }
+
+
+
   render() {
     return (
       <Router>
@@ -95,7 +121,13 @@ class App extends Component {
                     updateBookState={this.updateBookState}
                      />
             )} />
-            <Route exact path="/search" component={Search} />
+            <Route exact path="/search" render={() => (
+              <Search 
+                searchText={this.state.searchText}
+                books={this.state.books}
+                onTextChange={this.onTextChange}
+               />
+            )} />
             <Footer />
           </div>
         </MuiThemeProvider>
