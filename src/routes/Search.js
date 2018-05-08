@@ -28,9 +28,11 @@ class Search extends Component {
     const { searchText } = this.props;
     const { books } = this.props;
     const { onTextChange } = this.props; 
+    const { updateBookState} = this.props;
     return <div className="container">
         <SearchBar name="searchText" value={searchText} onChange={onTextChange} />
-        {books.length > 0 ? <BookResults books={books} /> : null}
+        {books.length > 0 ? <BookResults books={books}
+        onUpdateClick={updateBookState} /> : null}
       </div>;
   }
 }

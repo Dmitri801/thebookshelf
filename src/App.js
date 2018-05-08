@@ -75,6 +75,8 @@ class App extends Component {
           this.setState({
             read,
             currentlyReading,
+            searchText: '',
+            books: [],
             wantToRead
           })
 
@@ -94,11 +96,22 @@ class App extends Component {
       } else {
         BooksAPI.search(val, 15)
           .then(books => {
+            books.forEach(book => book.shelf = 'none')
             const currentlyReadingId = this.state.currentlyReading.map(i => i.id);
-            const filterCurrentlyReading = books.filter(book => (
-              book.id === currentlyReadingId.map(i => i)
-            ))
-            console.log(filterCurrentlyReading)
+            const wantToReadId = this.state.wantToRead.map(i => i.id);
+            const readId = this.state.read.map(i => i.id);
+            let filterCurrentlyReading = books.filter(book => currentlyReadingId.includes(book.id))
+            filterCurrentlyReading.forEach(book => book.shelf = 'currentlyReading')
+            let filterWantToRead = books.filter(book =>
+              wantToReadId.includes(book.id)
+            );
+            filterWantToRead.forEach(book => (book.shelf = "wantToRead"));
+            let filterRead = books.filter(book =>
+              readId.includes(book.id)
+            );
+            filterRead.forEach(book => (book.shelf = "read"));
+            BooksAPI.getAll().then(books => console.log(books))
+            console.log(books)
             this.setState({ books })
           })
           .catch(err => console.log(err))
@@ -126,6 +139,7 @@ class App extends Component {
                 searchText={this.state.searchText}
                 books={this.state.books}
                 onTextChange={this.onTextChange}
+                updateBookState={this.updateBookState}
                />
             )} />
             <Footer />
