@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import BookResults from '../components/BookResults';
 import { Link } from 'react-router-dom';
+// import * as BooksAPI from "../BooksAPI";
 
-class Home extends Component {
-
-  
+class Home extends Component { 
   render() {
     const { currentlyReading } = this.props;
     const { wantToRead } = this.props;
     const { read } = this.props;
     const { updateBookState } = this.props;
+    
     return (
       <div className="container">
       <div className="row homeRow">

@@ -21,42 +21,66 @@ class App extends Component {
 
   componentDidMount() {
     BooksAPI.getAll().then(books => {
-      const read = books.reduce((val,book) => {
-        if(book.shelf === 'read') {
+      const read = books.reduce((val, book) => {
+        if (book.shelf === 'read') {
           val.push(book)
-        } 
+        }
         return val;
       }, []);
       const currentlyReading = books.reduce((val, book) => {
-        if(book.shelf === 'currentlyReading') {
+        if (book.shelf === 'currentlyReading') {
           val.push(book)
         }
         return val;
       }, []);
       const wantToRead = books.reduce((val, book) => {
-        if(book.shelf === 'wantToRead') {
+        if (book.shelf === 'wantToRead') {
           val.push(book)
         }
         return val;
       }, [])
-        this.setState({
-          read,
-          currentlyReading,
-          wantToRead
-        })
-      
+      this.setState({
+        read,
+        currentlyReading,
+        wantToRead
+      })
+
     });
   }
 
   updateBookState = (book, newShelf) => {
-    BooksAPI.update(book, newShelf) 
-          .then(updatedBooks => {
-            this.setState({
-              currentlyReading: this.state.currentlyReading,
-              wantToRead: this.state.wantToRead,
-              read: this.state.read
-            })
+
+    BooksAPI.update(book, newShelf)
+
+      .then(updatedBook => {
+        BooksAPI.getAll().then(books => {
+          const read = books.reduce((val, book) => {
+            if (book.shelf === 'read') {
+              val.push(book)
+            }
+            return val;
+          }, []);
+          const currentlyReading = books.reduce((val, book) => {
+            if (book.shelf === 'currentlyReading') {
+              val.push(book)
+            }
+            return val;
+          }, []);
+          const wantToRead = books.reduce((val, book) => {
+            if (book.shelf === 'wantToRead') {
+              val.push(book)
+            }
+            return val;
+          }, [])
+          this.setState({
+            read,
+            currentlyReading,
+            wantToRead
           })
+
+        });
+
+      })
   }
   render() {
     return (
@@ -68,7 +92,8 @@ class App extends Component {
               <Home currentlyReading={this.state.currentlyReading}
                     wantToRead={this.state.wantToRead}
                     read={this.state.read}
-                    updateBookState={this.updateBookState} />
+                    updateBookState={this.updateBookState}
+                     />
             )} />
             <Route exact path="/search" component={Search} />
             <Footer />
