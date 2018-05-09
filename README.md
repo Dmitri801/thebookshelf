@@ -1,4 +1,14 @@
+Udacity Book Shelf Project(myBookCave) 2018.
+
+To start the app clone or download from Github.
+
+npm install to install dependancies
+
+yarn start to launch the Server 
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+
+
 
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
