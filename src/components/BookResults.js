@@ -44,21 +44,21 @@ class BookResults extends Component {
                     disabled={true}
                     primaryText="Move Book To.."
                   />
-                  {window.location.href === 'http://localhost:3000/search' ? <Link to="/">
+                  {window.location.href === 'http://localhost:3000/search' && book.shelf !== 'currentlyReading' ? <Link to="/">
                   <MenuItem
                     checked={book.shelf === "currentlyReading" && true}
                     primaryText="Currently Reading"
                     onClick={() =>
-                      onUpdateClick(book, "currentlyReading")
+                      onUpdateClick(book, "currentlyReading") 
                     }
                     /> </Link> : <MenuItem
                       checked={book.shelf === "currentlyReading" && true}
                       primaryText="Currently Reading"
-                      onClick={() =>
-                        onUpdateClick(book, "currentlyReading")
+                      onClick={book.shelf !== 'currentlyReading' ? () =>
+                        onUpdateClick(book, "currentlyReading") : null
                       }
                     />}
-                  {window.location.href === 'http://localhost:3000/search' ? <Link to="/">
+                  {window.location.href === 'http://localhost:3000/search' && book.shelf !=='wantToRead' ? <Link to="/">
                     <MenuItem
                       checked={book.shelf === "wantToRead" && true}
                       primaryText="Want To Read"
@@ -68,11 +68,11 @@ class BookResults extends Component {
                     /> </Link> : <MenuItem
                       checked={book.shelf === "wantToRead" && true}
                       primaryText="Want To Read"
-                      onClick={() =>
-                        onUpdateClick(book, "wantToRead")
+                      onClick={book.shelf !== 'wantToRead' ?() =>
+                        onUpdateClick(book, "wantToRead") : null
                       }
                     />}
-                  {window.location.href === 'http://localhost:3000/search' ? <Link to="/">
+                  {window.location.href === 'http://localhost:3000/search' && book.shelf !== 'read' ? <Link to="/">
                     <MenuItem
                       checked={book.shelf === "read" && true}
                       primaryText="Read"
@@ -82,8 +82,8 @@ class BookResults extends Component {
                     /> </Link> : <MenuItem
                       checked={book.shelf === "read" && true}
                       primaryText="Read"
-                      onClick={() =>
-                        onUpdateClick(book, "read")
+                      onClick={book.shelf !== 'read' ? () =>
+                        onUpdateClick(book, "read" ) : null
                       }
                     />}
                   {window.location.href === 'http://localhost:3000/search' && book.shelf !== 'none' ? <Link to="/">
@@ -108,7 +108,7 @@ class BookResults extends Component {
               {book.imageLinks !== undefined ? (
                 <img src={book.imageLinks.thumbnail} alt="None" />
               ) : (
-                "No Image Found"
+                "No Image Found... :)"
               )}
             </GridTile>
           ))}
